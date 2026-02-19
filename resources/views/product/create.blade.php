@@ -6,6 +6,7 @@
     <title>Agregar Producto</title>
 </head>
 <body>
+    @include ('layout.navbar')
     <div class="container">
         <div class="form-card">
             <h2 align="center">Crear Nuevo Producto</h2>
@@ -33,5 +34,6 @@
             </form>
         </div>
     </div>
+    @include ('layout.footer')
 </body>
 </html>

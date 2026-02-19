@@ -27,18 +27,7 @@
 </head>
 <body>
 
-    <nav class="navbar">
-        <div style="display: flex; align-items: center; gap: 20px;">
-            <h2 style="color: #ff9900; margin: 0;">Amazon<span style="color:white">UNAB</span></h2>
-            <div style="background: white; border-radius: 4px; display: flex; flex-grow: 1; max-width: 600px;">
-                <input type="text" placeholder="Buscar productos..." style="width: 100%; border: none; padding: 8px; border-radius: 4px 0 0 4px;">
-                <button style="background: #febd69; border: none; padding: 0 15px; border-radius: 0 4px 4px 0; cursor: pointer;">🔍</button>
-            </div>
-        </div>
-        <div style="margin-left: auto;">
-            <a href="/tienda/crear" style="color: white; text-decoration: none; font-weight: bold; border: 1px solid white; padding: 5px 10px; border-radius: 3px;">+ Crear Producto</a>
-        </div>
-    </nav>
+ @include ('layout.navbar')
 
     <div class="results-bar">
         1-5 de 5 resultados para <span style="color: #c45500; font-weight: bold;">"Electrónicos de Clase"</span>
@@ -124,9 +113,7 @@
         </div>
     </div>
 
-    <footer style="background-color: #232f3e; color: white; text-align: center; padding: 20px; margin-top: 40px;">
-        <p>© 2026 Proyecto de Clase Laravel - @joserraldo</p>
-    </footer>
+    @include ('layout.footer')
 
 </body>
 </html>

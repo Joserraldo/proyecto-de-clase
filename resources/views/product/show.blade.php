@@ -6,9 +6,7 @@
     <title>Detalle del Producto</title>
 </head>
 <body>
-    <div class="navbar">
-        <a href="/tienda" style="color:white; text-decoration:none;">← Volver a la tienda</a>
-    </div>
+    @include ('layout.navbar')
 
     <div class="container">
         <div class="product-details">
@@ -36,5 +34,6 @@
             </div>
         </div>
     </div>
+    @include ('layout.footer')
 </body>
 </html>
