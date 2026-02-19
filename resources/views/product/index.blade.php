@@ -1,34 +1,9 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Amazon Clone | Proyecto UNAB</title>
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <style>
-        /* Unos retoques extra para que el index se vea impecable */
-        .results-bar {
-            background-color: white;
-            padding: 10px 20px;
-            border-bottom: 1px solid #ddd;
-            margin-bottom: 20px;
-            font-size: 0.9rem;
-        }
-        .product-card h3 {
-            font-size: 1.1rem;
-            margin: 10px 0;
-            color: #007185;
-        }
-        .product-card h3:hover {
-            color: #c45500;
-            text-decoration: underline;
-        }
-    </style>
-</head>
-<body>
+@extends('layout.app')
 
- @include ('layout.navbar')
+{{-- Aquí defines el título específico para la pestaña del navegador --}}
+@section('title', 'Inicio - Listado de Productos')
 
+@section('content')
     <div class="results-bar">
         1-5 de 5 resultados para <span style="color: #c45500; font-weight: bold;">"Electrónicos de Clase"</span>
     </div>
@@ -112,8 +87,4 @@
             @endforeach
         </div>
     </div>
-
-    @include ('layout.footer')
-
-</body>
-</html>
+@endsection

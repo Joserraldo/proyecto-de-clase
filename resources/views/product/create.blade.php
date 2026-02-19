@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <title>Agregar Producto</title>
-</head>
-<body>
-    @include ('layout.navbar')
+@extends ('layout.app')
+@section('title', 'Crear nuevo producto')
+@section ('content')
     <div class="container">
         <div class="form-card">
             <h2 align="center">Crear Nuevo Producto</h2>
@@ -34,6 +28,4 @@
             </form>
         </div>
     </div>
-    @include ('layout.footer')
-</body>
-</html>
+@endsection

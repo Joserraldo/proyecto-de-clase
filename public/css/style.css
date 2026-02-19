@@ -163,3 +163,19 @@ body {
     border-top: 1px solid #3a4553;
     padding-top: 20px;
 }
+        .results-bar {
+            background-color: white;
+            padding: 10px 20px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+        .product-card h3 {
+            font-size: 1.1rem;
+            margin: 10px 0;
+            color: #007185;
+        }
+        .product-card h3:hover {
+            color: #c45500;
+            text-decoration: underline;
+        }
