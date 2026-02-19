@@ -1,11 +1,11 @@
-# Mi Perfil en Laravel
+# Proyecto de Clase
 
-Aplicación web desarrollada con Laravel como parte del Taller Básico de Laravel - UNAB.
+Aplicación web desarrollada con **Laravel** como parte del Taller Básico de Laravel - UNAB.
 
 ## Requisitos
-- PHP
-- Composer
-- XAMPP
+* **PHP** (Versión recomendada 8.2+)
+* **Composer**
+* **XAMPP** (o cualquier servidor local con MySQL)
 
 ## Instalación
 1. Clonar repositorio
