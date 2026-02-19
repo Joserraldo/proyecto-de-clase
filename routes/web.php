@@ -9,13 +9,14 @@ use App\Http\Controllers\HomeController;
 
 Route::get('/', [HomeController::class]);
 
-Route::get('/product', [ProductController::class, 'index']);
+Route::prefix ('product')->controller(ProductController::class) ->group(function(){
 
-Route::get('/product/create', [ProductController::class, 'create']);
-
-
-
+Route::get('/', 'index');
+Route::get('/create', 'create');
 //RUTAS DINAMICAS - siempre se escriben al final de las rutas estaticas
+Route::get('/{producto}', 'show');
 
-Route::get('/product/{producto}', [ProductController::class, 'show']);
+});
+
+
 
