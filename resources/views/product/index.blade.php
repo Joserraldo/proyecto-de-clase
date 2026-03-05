@@ -27,8 +27,12 @@
             @foreach($misProductos as $p)
             <div class="product-card">
                 <a href="/tienda/{{ $p['id']   }}">
-                    <img src="{{ $p['img'] }}" alt="{{ $p['name'] }}">
                 </a>
+                    @if ($p-> image)
+                    <img src="{{ asset('storage/' . $p->image) }}" alt="{{ $p->name }}" style="width: 100%; height: auto; margin-bottom: 10px;">
+                    @else
+                    <img src="https://cdn-icons-png.flaticon.com/512/428/428001.png" alt="{{ $p->name }}" style="width: 100%; height: auto; margin-bottom: 10px;">
+                    @endif
 
                 <a href="/tienda/{{ $p['id'] }}" style="text-decoration: none;">
                     <h3>{{ $p['nombre'] }}</h3>

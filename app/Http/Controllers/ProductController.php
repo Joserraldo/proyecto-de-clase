@@ -10,7 +10,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $ProductList = Product::all();
+        $ProductList = Product::limit(20)->orderBy('id','desc')->get();
 
         return view('product.index',['misProductos'=>$ProductList]);
     }
@@ -34,9 +34,14 @@ class ProductController extends Controller
         $newproduct->price = $request->input('precio');
         $newproduct->category_id = $request->input('categoria');
 
+        if($request->hasFile('imagen')) {
+            $ruta = $request->file('imagen')->store('images','public');
+            $newproduct->image = $ruta;
+        }
+
         $newproduct->save();
 
         return redirect()->route('product.index');
-        }
+    }
 }
 

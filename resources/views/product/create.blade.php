@@ -4,7 +4,7 @@
     <div class="container">
         <div class="form-card">
             <h2 align="center">Crear Nuevo Producto</h2>
-            <form action="{{ route('product.store') }}" method="POST">
+            <form action="{{ route('product.store') }}" method="POST" enctype ="multipart/form-data">
                 @csrf
                 <label>Nombre del Producto</label><br>
                 <input type="text" name="nombre" style="width:100%; margin-bottom:15px;" required>
@@ -15,8 +15,8 @@
                 <label>Descripción</label><br>
                 <textarea name="descripcion" rows="4" style="width:100%; margin-bottom:15px;"></textarea>
 
-                <label>URL de la Imagen</label><br>
-                <input type="file" id = "imagen "name="imagen" accept="image/*" style="width:100%; margin-bottom:15px;">
+                <label>Imagen</label><br>
+<input type="file" id = "imagen" name="imagen" accept="image/*" style="width:100%; margin-bottom:15px;">
 
                 <label>Categoria</label><br>
                 <select id = "categoria" name="categoria" style="width:100%; margin-bottom:20px;">
