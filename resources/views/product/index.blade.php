@@ -44,7 +44,7 @@
 
                 <div style="margin-top: 10px;">
                     <span class="status-badge {{ $p['state'] == 'Disponible' ? 'available' : 'unavailable' }}">
-                        {{ $p['state'] }}
+                        {{ $p['category_id'] }}
                     </span>
                 </div>
 
