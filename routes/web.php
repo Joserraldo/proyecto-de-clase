@@ -19,6 +19,9 @@ Route::get('/{producto}', 'show');
 #url es para recibir datos desde post
 Route::post('/store', 'store')->name('product.store');
 
+#borrar 
+Route::delete('/{producto}', 'destroy')->name('product.destroy');
+
 });
 
 

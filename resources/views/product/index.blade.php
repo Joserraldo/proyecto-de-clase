@@ -51,6 +51,11 @@
                         {{ $p['category_id'] }}
                     </span>
                 </div>
+                <form action="{{route('product.destroy',$p)}}" method="POST" ">
+                    @method('DELETE')
+                    @csrf    
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                </form>
 
                 <p style="font-size: 0.8rem; color: #007600; margin-top: 10px;">
                     ✓ Envío gratis a Bucaramanga

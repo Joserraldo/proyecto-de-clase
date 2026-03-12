@@ -25,6 +25,10 @@ class ProductController extends Controller
     public function show ($producto){
         return view('product.show', compact('producto'));
     }
+    public function destroy(Product $producto){
+        $producto->delete();
+        return redirect()->route('product.index');
+    }
     public function store(Request $request){
         //VALIDACION DE LOS CAMPOS
         $request->validate([
@@ -55,5 +59,6 @@ class ProductController extends Controller
 
         return redirect()->route('product.index');
     }
+    
 }
 
