@@ -26,7 +26,19 @@ class ProductController extends Controller
         return view('product.show', compact('producto'));
     }
     public function store(Request $request){
+        //VALIDACION DE LOS CAMPOS
+        $request->validate([
+            'nombre' => 'required|min:3|max:255',
+            'precio' => 'required|numeric',
+            'descripcion' => 'required',
+            'imagen' => 'required|image',
+            'categoria' => 'required|exists:categories,id',
+        ]);
+
+
         //dd($request->all());
+
+
 
         $newproduct = new Product();
         $newproduct->name = $request->get('nombre');

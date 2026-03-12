@@ -7,9 +7,9 @@ use App\Http\Controllers\HomeController;
 
 #Rutas estaticas
 
-Route::get('/', [HomeController::class]);
+Route::get('/', HomeController::class);
 
-Route::prefix ('product')->controller(ProductController::class) ->group(function(){
+Route::prefix('product')->controller(ProductController::class)->group(function(){
 
 Route::get('/', 'index')->name('product.index');   
 Route::get('/create', 'create');
