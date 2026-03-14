@@ -26,36 +26,35 @@
 
             @foreach($misProductos as $p)
             <div class="product-card">
-                <a href="/tienda/{{ $p['id']   }}">
-                </a>
-                    @if ($p-> image)
-                    <img src="{{ asset('storage/' . $p->image) }}" alt="{{ $p->name }}" style="width: 100%; height: auto; margin-bottom: 10px;">
+                <a href="{{ route('product.show', $p) }}">
+                    @if ($p->image)
+                        <img src="{{ asset('storage/' . $p->image) }}" alt="{{ $p->name }}" style="width: 100%; height: 200px; object-fit: cover; margin-bottom: 10px;">
                     @else
-                    <img src="https://cdn-icons-png.flaticon.com/512/428/428001.png" alt="{{ $p->name }}" style="width: 100%; height: auto; margin-bottom: 10px;">
+                        <img src="https://cdn-icons-png.flaticon.com/512/428/428001.png" alt="{{ $p->name }}" style="width: 100%; height: 200px; object-fit: contain; margin-bottom: 10px;">
                     @endif
+                </a>
 
-                <a href="/tienda/{{ $p['id'] }}" style="text-decoration: none;">
-                    <h3>{{ $p['nombre'] }}</h3>
+                <a href="{{ route('product.show', $p) }}" style="text-decoration: none;">
+                    <h3>{{ $p->name }}</h3>
                 </a>
                 
-                <p style="font-size: 0.8rem; color: #565959;">ID: #{{ $p['id'] }}</p>
+                <p style="font-size: 0.8rem; color: #565959;">Categoría: {{ $p->category->name ?? 'N/A' }}</p>
                 
-                <p style="font-size: 0.9rem; margin: 5px 0;">{{ Str::limit($p['description'], 80) }}</p>
+                <p style="font-size: 0.9rem; margin: 5px 0; color: #111;">{{ Str::limit($p->description, 80) }}</p>
                 
-                <p class="price">
-                    <span style="font-size: 0.8rem; vertical-align: top;">$</span>{{ number_format($p['price'], 2) }}
+                <p class="price" style="font-weight: bold; font-size: 1.2rem; color: #B12704;">
+                    <span style="font-size: 0.8rem; vertical-align: top;">$</span>{{ number_format($p->price, 2) }}
                 </p>
 
-                <div style="margin-top: 10px;">
-                    <span class="status-badge {{ $p['state'] == 'Disponible' ? 'available' : 'unavailable' }}">
-                        {{ $p['category_id'] }}
-                    </span>
+                <div class="actions" style="display: flex; gap: 10px; margin-top: 15px;">
+                    <a href="{{ route('product.show', $p) }}" class="btn-amazon" style="flex: 1; text-align: center; text-decoration: none; padding: 5px; font-size: 0.8rem;">Ver detalle</a>
+                    
+                    <form action="{{ route('product.destroy', $p) }}" method="POST" onsubmit="return confirm('¿Seguro que deseas eliminar este producto?')">
+                        @method('DELETE')
+                        @csrf    
+                        <button type="submit" style="background: #f0f0f0; border: 1px solid #adb1b8; padding: 5px 10px; border-radius: 3px; cursor: pointer; font-size: 0.8rem;">Eliminar</button>
+                    </form>
                 </div>
-                <form action="{{route('product.destroy',$p)}}" method="POST" ">
-                    @method('DELETE')
-                    @csrf    
-                    <button type="submit" class="btn btn-danger">Eliminar</button>
-                </form>
 
                 <p style="font-size: 0.8rem; color: #007600; margin-top: 10px;">
                     ✓ Envío gratis a Bucaramanga

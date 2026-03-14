@@ -18,16 +18,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        //crear usuarios
-        User::factory(1000)->create();
-       /* $this->call([
-            CategorySeeder::class,
-            ProductSeeder::class,
-        ]);*/
+        // Crear un usuario administrador específico
+        User::updateOrCreate(
+            ['email' => 'admin@example.com'],
+            [
+                'name' => 'Admin User',
+                'password' => bcrypt('admin123'),
+            ]
+        );
 
-        //Category::factory(10000)->create();
-        Product::factory(10000)->create();
-        CartItem::factory(20000)->create();
+        // Crear 10 categorías primero
+        Category::factory(10)->create();
 
+        // Crear 30 productos vinculados a esas categorías
+        Product::factory(30)->create();
     }
 }
