@@ -14,7 +14,7 @@
 
                 <label>Precio</label><br>
                 <input type="number" step="0.01" name="precio" style="width:100%; margin-bottom:15px;">
-                @error('nombre')
+                @error('precio')
                     <div style="color: red; margin-bottom: 15px;">{{ $message }}</div>
                 @enderror
 
