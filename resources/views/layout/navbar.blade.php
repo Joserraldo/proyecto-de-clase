@@ -4,9 +4,9 @@
     </div>
 
     <div class="nav-links">
-        <a href="/product">Inicio</a>
-        <a href="/product/show">Producto del dia</a>
+        <a href="{{ route('product.index') }}">Inicio</a>
+        <a href="{{ route('cart.index') }}">Carrito ({{ count(session('cart', [])) }})</a>
         <a href="#">Servicio al Cliente</a>
-        <a href="/product/create" class="btn-nav-create">+ Vender Producto</a>
+        <a href="{{ route('product.create') }}" class="btn-nav-create">+ Vender Producto</a>
     </div>
 </nav>
