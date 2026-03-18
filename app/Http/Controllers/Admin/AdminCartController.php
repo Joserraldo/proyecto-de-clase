@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\CartItem;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class AdminCartController extends Controller
 {
@@ -42,5 +43,16 @@ class AdminCartController extends Controller
     {
         $cartItem->delete();
         return redirect()->back()->with('success', 'Item eliminado del carrito.');
+    }
+
+    /**
+     * Send a promo notification to the specific user's cart
+     */
+    public function notifyPromo(User $user)
+    {
+        // Set a cache key that expires in 10 minutes
+        Cache::put('cart_promo_' . $user->id, true, now()->addMinutes(10));
+        
+        return redirect()->back()->with('success', '¡Notificación de oferta relámpago enviada a ' . $user->name . '!');
     }
 }

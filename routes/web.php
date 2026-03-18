@@ -23,6 +23,7 @@ Route::prefix('product')->controller(ProductController::class)->group(function()
 Route::prefix('cart')->controller(CartController::class)->group(function() {
     Route::get('/', 'index')->name('cart.index');
     Route::post('/add', 'add')->name('cart.add');
+    Route::post('/remove', 'remove')->name('cart.remove');
     Route::get('/checkout', 'checkout')->name('cart.checkout');
 });
 
@@ -56,6 +57,23 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::get('/carts', [\App\Http\Controllers\Admin\AdminCartController::class, 'index'])->name('admin.carts.index');
     Route::get('/carts/{user}', [\App\Http\Controllers\Admin\AdminCartController::class, 'show'])->name('admin.carts.show');
     Route::delete('/carts/item/{cartItem}', [\App\Http\Controllers\Admin\AdminCartController::class, 'destroyItem'])->name('admin.carts.destroyItem');
+    Route::post('/carts/{user}/notify', [\App\Http\Controllers\Admin\AdminCartController::class, 'notifyPromo'])->name('admin.carts.notify');
 });
+
+// API para consultar promociones en tiempo real
+Route::get('/api/check-promo', function() {
+    if (!\Illuminate\Support\Facades\Auth::check()) {
+        return response()->json(['hasPromo' => false]);
+    }
+    
+    $hasPromo = \Illuminate\Support\Facades\Cache::has('cart_promo_' . \Illuminate\Support\Facades\Auth::id());
+    if ($hasPromo) {
+        // La borramos para que solo aparezca una vez
+        \Illuminate\Support\Facades\Cache::forget('cart_promo_' . \Illuminate\Support\Facades\Auth::id());
+        return response()->json(['hasPromo' => true, 'message' => '¡OFERTA RELÁMPAGO! Completa tu compra en la próxima hora y no te arrepentirás.']);
+    }
+    
+    return response()->json(['hasPromo' => false]);
+})->name('api.check-promo');
 
 require __DIR__.'/auth.php';

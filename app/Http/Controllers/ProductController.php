@@ -8,9 +8,39 @@ use App\Http\Requests\StoreProductRequest;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(\Illuminate\Http\Request $request)
     {
-        $ProductList = Product::with('category')->latest()->take(20)->get();
+        $query = Product::with('category');
+
+        if ($request->has('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        if ($request->has('category')) {
+            $query->where('category_id', $request->category);
+        }
+
+        if ($request->filled('price_min')) {
+            $query->where('price', '>=', $request->price_min);
+        }
+
+        if ($request->filled('price_max')) {
+            $query->where('price', '<=', $request->price_max);
+        }
+
+        switch ($request->query('sort')) {
+            case 'price_asc':
+                $query->orderBy('price', 'asc');
+                break;
+            case 'price_desc':
+                $query->orderBy('price', 'desc');
+                break;
+            case 'newest':
+            default:
+                $query->latest();
+                break;
+        }
+        $ProductList = $query->paginate(9);
 
         return view('product.index', ['misProductos' => $ProductList]);
     }

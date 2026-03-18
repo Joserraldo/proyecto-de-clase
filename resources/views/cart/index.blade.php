@@ -1,64 +1,108 @@
 @extends('layout.app')
 
-@section('title', 'Carrito de Compras')
+@section('title', 'Carrito de compras')
 
 @section('content')
-<div class="container" style="max-width: 1000px; margin: 20px auto; padding: 0 20px;">
-    <h1 style="font-size: 28px; margin-bottom: 20px;">Carrito de Compras</h1>
+<div class="bg-[#EAEDED] min-h-screen py-8">
+    <div class="max-w-[1500px] mx-auto px-6 flex flex-col lg:flex-row gap-6 font-roboto">
+        <!-- Main Cart List -->
+        <div class="flex-grow bg-white p-6 shadow-sm">
+            <h1 class="text-3xl font-medium mb-1">Carrito de compras</h1>
+            <button class="text-amazon-blue text-xs hover:underline mb-4">Desmarcar todos los artículos</button>
+            <div class="text-xs text-gray-500 text-right mb-2">Precio</div>
+            <div class="h-[1px] bg-gray-200 mb-6"></div>
 
-    @if(session('success'))
-        <div style="background-color: #e7f4e4; border: 1px solid #007600; color: #007600; padding: 15px; border-radius: 4px; margin-bottom: 20px;">
-            {{ session('success') }}
-        </div>
-    @endif
-
-    <div style="display: flex; gap: 20px;">
-        <div style="flex: 3; background: #fff; padding: 20px; border-radius: 8px;">
             @if(count($cart) > 0)
-                <table style="width: 100%; border-collapse: collapse;">
-                    <thead>
-                        <tr style="border-bottom: 1px solid #ddd;">
-                            <th style="text-align: left; padding: 10px 0;">Producto</th>
-                            <th style="text-align: center; padding: 10px 0;">Precio</th>
-                            <th style="text-align: center; padding: 10px 0;">Cantidad</th>
-                            <th style="text-align: right; padding: 10px 0;">Subtotal</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($cart as $id => $details)
-                            <tr style="border-bottom: 1px solid #ddd;">
-                                <td style="padding: 15px 0; display: flex; align-items: center; gap: 15px;">
-                                    <img src="{{ $details['image'] ? asset('storage/' . $details['image']) : 'https://cdn-icons-png.flaticon.com/512/428/428001.png' }}" 
-                                         style="width: 60px; height: 60px; object-fit: cover; border-radius: 4px;">
-                                    <div>
-                                        <p style="font-weight: 500; margin: 0;">{{ $details['name'] }}</p>
-                                        <p style="font-size: 12px; color: #007600;">En stock</p>
-                                    </div>
-                                </td>
-                                <td style="text-align: center;">${{ number_format($details['price'], 2) }}</td>
-                                <td style="text-align: center;">{{ $details['quantity'] }}</td>
-                                <td style="text-align: right; font-weight: bold;">${{ number_format($details['price'] * $details['quantity'], 2) }}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                <div class="space-y-6">
+                    @foreach($cart as $id => $details)
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <div class="w-full sm:w-44 h-44 flex-shrink-0 flex items-center justify-center bg-gray-50 rounded-sm p-4 overflow-hidden border border-gray-100">
+                            <img src="{{ $details['image'] ? asset('storage/' . $details['image']) : 'https://cdn-icons-png.flaticon.com/512/428/428001.png' }}" 
+                                 class="max-h-full max-w-full object-contain" alt="{{ $details['name'] }}"
+                                 onerror="this.src='https://cdn-icons-png.flaticon.com/512/428/428001.png'">
+                        </div>
+                        <div class="flex-grow">
+                            <div class="flex justify-between items-start gap-4">
+                                <h2 class="text-lg font-medium text-gray-900 leading-tight truncate-2-lines">{{ $details['name'] }}</h2>
+                                <span class="text-lg font-bold text-gray-900">${{ number_format($details['price'], 0, ',', '.') }}</span>
+                            </div>
+                            <p class="text-[10px] text-green-700 font-bold mt-1">En stock</p>
+                            <p class="text-[10px] text-gray-500 mt-1">Envío GRATIS disponible</p>
+                            
+                            <div class="flex items-center gap-4 mt-4">
+                                <div class="flex items-center bg-gray-100 border border-gray-300 rounded-md shadow-sm h-7 overflow-hidden">
+                                    <span class="text-xs px-2 text-gray-500">Cant: {{ $details['quantity'] }}</span>
+                                </div>
+                                <div class="h-4 w-[1px] bg-gray-300"></div>
+                                <form action="{{ route('cart.remove') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="id" value="{{ $id }}">
+                                    <button type="submit" class="text-amazon-blue text-xs hover:underline">Eliminar</button>
+                                </form>
+                                <div class="h-4 w-[1px] bg-gray-300"></div>
+                                <button type="button" class="text-amazon-blue text-xs hover:underline">Guardar para más tarde</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="h-[1px] bg-gray-200 my-6"></div>
+                    @endforeach
+                </div>
+                <div class="text-right text-lg">
+                    Subtotal ({{ count($cart) }} productos): <span class="font-bold">${{ number_format($total, 0, ',', '.') }}</span>
+                </div>
             @else
-                <div style="text-align: center; padding: 40px 0;">
-                    <p style="font-size: 18px; color: #565959;">Tu carrito de UNAB está vacío.</p>
-                    <a href="{{ route('product.index') }}" style="color: #007185; text-decoration: none;">Seguir comprando</a>
+                <div class="text-center py-16">
+                    <div class="text-gray-200 text-6xl mb-6"><i class="fas fa-shopping-basket"></i></div>
+                    <h2 class="text-xl font-medium mb-2">Tu carrito de Amazon UNAB está vacío</h2>
+                    <p class="text-xs text-gray-500 mb-6">Tus ofertas te esperan. Mira lo nuevo en tecnología.</p>
+                    <a href="{{ route('product.index') }}" class="bg-amazon-button px-8 py-2 rounded-lg text-sm font-medium shadow-sm hover:bg-yellow-400 transition-colors">Seguir comprando</a>
                 </div>
             @endif
         </div>
 
-        <div style="flex: 1; background: #fff; padding: 20px; border-radius: 8px; height: fit-content; border: 1px solid #ddd;">
-            <p style="font-size: 18px; margin-bottom: 15px;">Subtotal ({{ count($cart) }} productos): <br><strong>${{ number_format($total, 2) }}</strong></p>
-            
-            <a href="{{ route('cart.checkout') }}" 
-               style="display: block; width: 100%; text-align: center; padding: 10px; background: #ffd814; border: 1px solid #fcd200; border-radius: 20px; cursor: pointer; font-weight: 500; text-decoration: none; color: #000;">
-                Proceder al pago
-            </a>
-            
-            <p style="font-size: 12px; margin-top: 15px; color: #565959;">El envío es GRATUITO para miembros Prime.</p>
+        <!-- Right Side: Proceed to Checkout -->
+        <div class="w-full lg:w-[350px] flex-shrink-0">
+            <div class="bg-white p-6 shadow-sm">
+                <div class="flex items-center gap-2 mb-4">
+                    <i class="fas fa-check-circle text-green-700 text-lg"></i>
+                    <p class="text-[11px] text-gray-800">Tu pedido califica para <span class="text-green-700 font-bold font-roboto">Envío GRATIS</span>. Elige esta opción al finalizar la compra.</p>
+                </div>
+
+                <div class="text-lg mb-6 leading-tight">
+                    Subtotal ({{ count($cart) }} productos): <br>
+                    <span class="font-bold text-xl leading-tight block mt-1">${{ number_format($total, 0, ',', '.') }}.99</span>
+                </div>
+
+                <a href="{{ route('cart.checkout') }}" class="block w-full text-center bg-amazon-button py-2 rounded-lg text-sm font-medium shadow-sm hover:bg-yellow-400 transition-colors">
+                    Proceder al pago
+                </a>
+
+                <div class="mt-4 border border-gray-200 rounded-md p-3 group cursor-pointer hover:bg-gray-50 transition-colors">
+                    <div class="flex items-center justify-between text-xs">
+                        <div class="flex flex-col">
+                            <span class="font-bold">Descuentos de Amazon UNAB</span>
+                            <span class="text-gray-500 mt-0.5">Añade un cupón para ahorrar más</span>
+                        </div>
+                        <i class="fas fa-chevron-right text-gray-400 text-[10px]"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recently Viewed / Ads Placeholder -->
+            <div class="bg-white p-6 shadow-sm mt-6">
+                <h3 class="font-bold text-sm mb-4">Artículos vistos recientemente</h3>
+                <div class="space-y-4">
+                    @foreach($featuredProducts->take(2) as $p)
+                    <div class="flex gap-3">
+                        <img src="{{ $p->image ? asset('storage/' . $p->image) : 'https://cdn-icons-png.flaticon.com/512/428/428001.png' }}" class="w-16 h-16 object-contain" onerror="this.src='https://cdn-icons-png.flaticon.com/512/428/428001.png'">
+                        <div class="flex flex-col justify-center">
+                            <p class="text-xs font-medium text-amazon-blue line-clamp-1 truncate block w-40">{{ $p->name }}</p>
+                            <span class="text-sm font-bold text-red-700 mt-1">${{ number_format($p->price, 0) }}</span>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -1,25 +1,29 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+<nav x-data="{ open: false }" class="bg-amazon-navy border-b border-gray-800">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                    <a href="{{ route('dashboard') }}" class="text-white font-black text-xl italic tracking-tighter hover:text-amazon-orange transition-colors">
+                        Amazon <span class="text-amazon-orange not-italic">UNAB</span> <span class="text-xs font-normal text-gray-400">Admin</span>
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="text-gray-300 hover:text-white border-transparent hover:border-gray-500 focus:text-white focus:border-gray-500 {{ request()->routeIs('dashboard') ? 'text-white border-amazon-orange' : '' }}">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('admin.categories.index')" :active="request()->routeIs('admin.categories.*')">
+                    <x-nav-link :href="route('admin.categories.index')" :active="request()->routeIs('admin.categories.*')" class="text-gray-300 hover:text-white border-transparent hover:border-gray-500 focus:text-white focus:border-gray-500 {{ request()->routeIs('admin.categories.*') ? 'text-white border-amazon-orange' : '' }}">
                         {{ __('Categorías') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('admin.carts.index')" :active="request()->routeIs('admin.carts.*')">
+                    <x-nav-link :href="route('admin.carts.index')" :active="request()->routeIs('admin.carts.*')" class="text-gray-300 hover:text-white border-transparent hover:border-gray-500 focus:text-white focus:border-gray-500 {{ request()->routeIs('admin.carts.*') ? 'text-white border-amazon-orange' : '' }}">
                         {{ __('Carritos') }}
+                    </x-nav-link>
+                    <!-- Link to public site -->
+                    <x-nav-link :href="route('product.index')" class="text-amazon-orange hover:text-yellow-400 border-transparent">
+                        <i class="fas fa-external-link-alt mr-1 text-xs"></i> {{ __('Ir a la Tienda') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -28,7 +32,7 @@
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-bold rounded-md text-white bg-amazon-navy hover:text-amazon-orange focus:outline-none transition ease-in-out duration-150">
                             <div>{{ Auth::user()->name }}</div>
 
                             <div class="ms-1">
@@ -60,7 +64,7 @@
 
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
+                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-800 focus:outline-none focus:bg-gray-800 focus:text-white transition duration-150 ease-in-out">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />

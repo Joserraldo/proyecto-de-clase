@@ -13,7 +13,15 @@ export default {
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                roboto: ['Roboto', 'sans-serif'],
             },
+            colors: {
+                'amazon-orange': '#febd69',
+                'amazon-dark': '#131921',
+                'amazon-navy': '#232f3e',
+                'amazon-blue': '#007185',
+                'amazon-button': '#ffd814',
+            }
         },
     },
 
